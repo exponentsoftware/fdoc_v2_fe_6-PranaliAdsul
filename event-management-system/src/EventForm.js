@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
-const EventForm = ({ onAdd }) => {
+const EventForm = ({ onAddEvent }) => {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
+  const history = useHistory();
 
   const handleSubmit = e => {
     e.preventDefault();
+
     const newEvent = {
       title,
       date,
@@ -17,66 +19,37 @@ const EventForm = ({ onAdd }) => {
       location,
       description
     };
-    onAdd(newEvent);
-    setTitle('');
-    setDate('');
-    setTime('');
-    setLocation('');
-    setDescription('');
+
+    onAddEvent(newEvent);
+    history.push('/');
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formTitle">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter title"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group controlId="formDate">
-        <Form.Label>Date</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter date"
-          value={date}
-          onChange={e => setDate(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group controlId="formTime">
-        <Form.Label>Time</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter time"
-          value={time}
-          onChange={e => setTime(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group controlId="formLocation">
-        <Form.Label>Location</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter location"
-          value={location}
-          onChange={e => setLocation(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group controlId="formDescription">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          placeholder="Enter description"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-        />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Create Event
-      </Button>
-    </Form>
+    <div className="container">
+      <form className="event-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Title</label>
+          <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Date</label>
+          <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Time</label>
+          <input type="time" value={time} onChange={e => setTime(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Location</label>
+          <input type="text" value={location} onChange={e => setLocation(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Description</label>
+          <textarea value={description} onChange={e => setDescription(e.target.value)} />
+        </div>
+        <button type="submit">Create Event</button>
+      </form>
+    </div>
   );
 };
 

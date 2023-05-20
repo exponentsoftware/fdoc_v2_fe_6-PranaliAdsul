@@ -4,11 +4,7 @@ import { Container } from 'react-bootstrap';
 import EventList from './EventList';
 import EventDetails from './EventDetails';
 import EventForm from './EventForm';
-import { makeServer } from './api/server';
-
-if (process.env.NODE_ENV === 'development') {
-  makeServer();
-}
+import './App.css';
 
 const App = () => {
   const [events, setEvents] = useState([]);
@@ -27,7 +23,7 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             <EventList events={events} />
-            <EventForm onAdd={handleAddEvent} />
+            <EventForm onAddEvent={handleAddEvent} />
           </Route>
           <Route
             path="/events/:id"
@@ -36,6 +32,7 @@ const App = () => {
               const event = events.find(event => event.id === eventId);
               return (
                 <EventDetails
+                  events={events}
                   event={event}
                   onDelete={() => handleDeleteEvent(eventId)}
                 />

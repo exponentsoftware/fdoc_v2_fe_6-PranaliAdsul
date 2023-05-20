@@ -1,25 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
+import { useParams, Link } from 'react-router-dom';
 
-const EventDetails = ({ event, onDelete }) => {
+const EventDetails = ({ events }) => {
+  const { id } = useParams();
+  const event = events.find(event => event.id === parseInt(id));
+
   return (
-    <div>
-      <Card>
-        <Card.Body>
-          <Card.Title>{event.title}</Card.Title>
-          <Card.Text>Date: {event.date}</Card.Text>
-          <Card.Text>Time: {event.time}</Card.Text>
-          <Card.Text>Location: {event.location}</Card.Text>
-          <Card.Text>Description: {event.description}</Card.Text>
-        </Card.Body>
-      </Card>
-      <Button variant="primary" className="mt-3" as={Link} to="/">
-        Back
-      </Button>
-      <Button variant="danger" className="ml-3 mt-3" onClick={onDelete}>
-        Delete
-      </Button>
+    <div className="container">
+      <div className="event-details">
+        {event ? (
+          <>
+            <h2>{event.title}</h2>
+            <p>Date: {event.date}</p>
+            <p>Time: {event.time}</p>
+            <p>Location: {event.location}</p>
+            <p>Description: {event.description}</p>
+          </>
+        ) : (
+          <p>Event not found.</p>
+        )}
+        <Link to="/" className="back-link">
+          Back
+        </Link>
+      </div>
     </div>
   );
 };

@@ -1,22 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
 
 const EventList = ({ events }) => {
   return (
-    <div>
-      <h2>Event List</h2>
-      {events.map(event => (
-        <Card key={event.id} className="mb-3">
-          <Card.Body>
-            <Card.Title>{event.title}</Card.Title>
-            <Card.Text>Date: {event.date}</Card.Text>
+    <div className="container">
+      <ul className="event-list">
+        <h2> Events</h2>
+        {events.map(event => (
+          <li key={event.id}>
             <Link to={`/events/${event.id}`}>
-              <Button variant="primary">Details</Button>
+              <div className="event-item">
+                <h3>{event.title}</h3>
+                <p>{event.date}</p>
+              </div>
             </Link>
-          </Card.Body>
-        </Card>
-      ))}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
